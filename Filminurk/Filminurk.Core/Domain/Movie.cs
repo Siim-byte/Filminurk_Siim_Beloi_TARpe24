@@ -18,7 +18,7 @@ namespace Filminurk.Core.Domain
         //public List<UserComment>? Reviews { get; set; }
         public int? DeadCounter { get; set; }
         public int? AliveCounter { get; set; }
-        public int? ActorCount { get; set; }
+        public int? ActorCounter { get; set; }
 
 
     }
