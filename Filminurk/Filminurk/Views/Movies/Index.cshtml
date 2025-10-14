@@ -18,7 +18,7 @@
 				<th scope="col">Filmi pealkiri</th>
 				<th scope="col">Väljalaskeaeg</th>
 				<th scope="col">Hinnang</th>
-				<th scope="col">Surnede arv</th>
+				<th scope="col">Surnude arv</th>
 				<th scope="col">Tööriistad</th>
 			</tr>
 		</thead>
@@ -31,7 +31,9 @@
 					<td>@movie.FirstPublished</td>
 					<td>@movie.CurrentRating</td>
 					<td>@movie.DeadCounter</td>
-					<td></td>
+					<td>
+						<a asp-action="Delete" asp-controller="Movies" asp-route-id="@movie.ID" class="btn btn-outline-danger"></a>
+					</td>
 				</tr>
 				rowNumber += 1;
 			}

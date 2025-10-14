@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Filminurk.Core.Domain;
 using Filminurk.Core.Dto;
+using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
 using Microsoft.EntityFrameworkCore;
 
