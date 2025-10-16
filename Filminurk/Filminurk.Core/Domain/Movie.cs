@@ -19,6 +19,8 @@ namespace Filminurk.Core.Domain
         public int? DeadCounter { get; set; }
         public int? AliveCounter { get; set; }
         public int? ActorCounter { get; set; }
+        public DateTime? EntryCreatedAt { get; set; }
+        public DateTime? EntryModifiedAt { get; set; }
 
 
     }
