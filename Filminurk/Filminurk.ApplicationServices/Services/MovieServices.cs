@@ -45,6 +45,11 @@ namespace Filminurk.ApplicationServices.Services
 
             return movie;
         }
+        public async Task<Movie> DetailsAsync(Guid id)
+        {
+            var result = await _context.Movies.FirstOrDefaultAsync(x => x.ID == id);
+            return result;
+        }
         public async Task<Movie> Update(MoviesDTO dto)
         {
             Movie movie = new Movie();
@@ -73,7 +78,7 @@ namespace Filminurk.ApplicationServices.Services
             var result = await _context.Movies
                 .FirstOrDefaultAsync(m => m.ID == id);
 
-            var images = await _context.Movies
+            var images = await _context.FilesToApi
                 .Where(x => x.MovieID == id)
                 .Select(y => new FileToApiDTO()
                 {
@@ -82,7 +87,7 @@ namespace Filminurk.ApplicationServices.Services
                     ExistingFilePath = y.ExistingFilePath
                 }).ToArrayAsync();
 
-
+            await _filesServices.RemoveImagesFromApi(images);
             _context.Movies.Remove(result);
             await _context.SaveChangesAsync();
 
