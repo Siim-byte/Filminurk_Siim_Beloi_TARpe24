@@ -10,6 +10,7 @@
         public List<string>? Actors { get; set; }
         public decimal? CurrentRating { get; set; }
         //public List<UserComment>? Reviews { get; set; }
+        public List<ImageViewModel> Images { get; set; } = new List<ImageViewModel>();
         public int? DeadCounter { get; set; }
         public int? AliveCounter { get; set; }
         public int? ActorCounter { get; set; }

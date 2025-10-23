@@ -14,9 +14,14 @@ namespace Filminurk.ApplicationServices.Services
     public class MovieServices : IMovieServices
     {
         private readonly FilminurkTARpe24Context _context;
-        public MovieServices(FilminurkTARpe24Context context)
+        private readonly IFilesServices _filesServices;
+        public MovieServices
+            (
+            FilminurkTARpe24Context context
+            , IFilesServices filesServices)
         {
             _context = context;
+            _filesServices = filesServices;
         }
         public async Task<Movie> Create(MoviesDTO dto)
         {
@@ -33,6 +38,7 @@ namespace Filminurk.ApplicationServices.Services
             movie.ActorCounter = dto.ActorCounter;
             movie.EntryCreatedAt = DateTime.Now;
             movie.EntryModifiedAt = DateTime.Now;
+            _filesServices.FilesToApi(dto, movie);
 
             await _context.Movies.AddAsync(movie);
             await _context.SaveChangesAsync();
@@ -55,6 +61,7 @@ namespace Filminurk.ApplicationServices.Services
             movie.ActorCounter = dto.ActorCounter;
             movie.EntryCreatedAt = DateTime.Now;
             movie.EntryModifiedAt = DateTime.Now;
+            _filesServices.FilesToApi(dto, movie);
 
             _context.Movies.Update(movie);
             await _context.SaveChangesAsync();
@@ -65,6 +72,15 @@ namespace Filminurk.ApplicationServices.Services
 
             var result = await _context.Movies
                 .FirstOrDefaultAsync(m => m.ID == id);
+
+            var images = await _context.Movies
+                .Where(x => x.MovieID == id)
+                .Select(y => new FileToApiDTO()
+                {
+                    ImageID = y.ImageID,
+                    MovieID = y.MovieID,
+                    ExistingFilePath = y.ExistingFilePath
+                }).ToArrayAsync();
 
 
             _context.Movies.Remove(result);

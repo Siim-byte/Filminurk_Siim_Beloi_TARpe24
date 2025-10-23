@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-
-namespace Filminurk.Core.Dto
+﻿namespace Filminurk.Models.Movies
 {
-    public class MoviesDTO
+    public class MoviesDetailsViewModel
     {
         public Guid? ID { get; set; }
         public string? Title { get; set; }
@@ -17,14 +10,10 @@ namespace Filminurk.Core.Dto
         public List<string>? Actors { get; set; }
         public decimal? CurrentRating { get; set; }
         //public List<UserComment>? Reviews { get; set; }
-        public List<IFormFile> Files { get; set; }
-        public IEnumerable<FileToApiDTO> FileToApiDTOs { get; set; } = new List<FileToApiDTO>();
-        
-        /* 3 ise valitud andmetüüpi */
-        public int? DeadCounter { get; set; }
+        public List<ImageViewModel> Images { get; set; } = new List<ImageViewModel>();
+        public int? DeadCounter { get; set; }   
         public int? AliveCounter { get; set; }
         public int? ActorCounter { get; set; }
-
         /* andmebaasi jaoks vajalikud*/
         public DateTime? EntryCreatedAt { get; set; }
         public DateTime? EntryModifiedAt { get; set; }

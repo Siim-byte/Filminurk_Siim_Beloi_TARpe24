@@ -8,11 +8,11 @@ using Filminurk.Core.Dto;
 
 namespace Filminurk.Core.ServiceInterface
 {
-    public interface IMovieServices
+    public interface IFilesServices
     {
-        Task<Movie> Create(MoviesDTO dto);
-        Task<Movie> Delete(Guid id);
-        Task<Movie> DetailsAsync(Guid id);
-        Task<Movie> Update(MoviesDTO dTO);
+        void FilesToApi (MoviesDTO dto, Movie domain);
+        Task<FileToApi> RemoveImageFromApi(FileToApiDTO dto);
+        Task<FileToApi> RemoveImagesFromApi(FileToApiDTO[] dto);
+
     }
 }
