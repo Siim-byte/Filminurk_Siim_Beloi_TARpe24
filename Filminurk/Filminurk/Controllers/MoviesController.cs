@@ -80,7 +80,8 @@ namespace Filminurk.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return NotFound();
+            return RedirectToAction(nameof(Index));
+
         }
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
@@ -105,6 +106,7 @@ namespace Filminurk.Controllers
             vm.EntryModifiedAt = movie.EntryModifiedAt;
             vm.Director = movie.Director;
             vm.Actors = movie.Actors;
+            vm.Images.AddRange(images);
 
             return View(vm);
         }
@@ -220,6 +222,18 @@ namespace Filminurk.Controllers
                 return NotFound();
             }
             return RedirectToAction(nameof(Index));
+        }
+        private async Task<ImageViewModel[]> FileFromDatabase(Guid id)
+        {
+            return await _context.FilesToApi
+                .Where(x => x.MovieID == id)
+                .Select(y => new ImageViewModel
+                {
+                    ImageID = y.ImageID,
+                    MovieID = y.MovieID,
+                    IsPoster = y.IsPoster,
+                    FilePath = y.ExistingFilePath
+                }).ToArrayAsync();
         }
     }
 }
