@@ -1,11 +1,12 @@
-﻿using System.IO;
-using System.Reflection.Metadata.Ecma335;
+﻿using Filminurk.ApplicationServices.Services;
 using Filminurk.Core.Dto;
 using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
 using Filminurk.Models.Movies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
+using System.Reflection.Metadata.Ecma335;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Filminurk.Controllers
@@ -14,17 +15,17 @@ namespace Filminurk.Controllers
     {
         private readonly FilminurkTARpe24Context _context;
         private readonly IMovieServices _movieServices;
-        private readonly IFilesServices _fileServices;
+        private readonly IFilesServices _filesServices; //piltide lisamiseks vajalik fileservices injection
         public MoviesController
             (
                 FilminurkTARpe24Context context,
                 IMovieServices movieServices,
-                IFilesServices filesServices
+                IFilesServices filesServices //piltide lisamiseks vajalik fileservices injection
             )
         {
             _context = context;
             _movieServices = movieServices;
-            _fileServices = filesServices;
+            _filesServices = filesServices; //piltide lisamiseks vajalik fileservices injection
         }
         public IActionResult Index()
         {
@@ -92,6 +93,7 @@ namespace Filminurk.Controllers
             {
                 return NotFound();
             }
+            ImageViewModel[] images = await FileFromDatabase(id);
             var vm = new MoviesDetailsViewModel();
 
             vm.ID = movie.ID;
@@ -214,7 +216,7 @@ namespace Filminurk.Controllers
             return View(vm);
         }
         [HttpPost]
-        public async Task<IActionResult> DeleteConfirmation(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var movie = await _movieServices.Delete(id);
             if (movie == null)

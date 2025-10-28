@@ -54,7 +54,7 @@ namespace Filminurk.ApplicationServices.Services
         {
             Movie movie = new Movie();
 
-            movie.ID = Guid.NewGuid();
+            movie.ID = (Guid)dto.ID;
             movie.Title = dto.Title;
             movie.Description = dto.Description;
             movie.CurrentRating = dto.CurrentRating;
