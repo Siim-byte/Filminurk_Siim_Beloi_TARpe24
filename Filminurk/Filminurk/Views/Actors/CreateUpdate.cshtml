@@ -1,0 +1,77 @@
+﻿@using Filminurk.Core.Domain
+@using Filminurk.Models.Actors
+
+@model Filminurk.Models.Actors.ActorsCreateUpdateViewModel
+
+@if (Model.ActorID.HasValue)
+{
+	<h1>Muuda näitleja</h1>
+}
+else
+{
+	<h1>Lisa näitleja</h1>
+}
+
+
+<div>
+	<form method="post" enctype="multipart/form-data">
+		<input asp-for="ActorID" type="hidden" />
+		<input asp-for="EntryCreatedAt" type="hidden" />
+		<input asp-for="EntryModifiedAt" type="hidden" />
+
+		<div class="form-group row">
+			<label asp-for="FirstName" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="FirstName" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label asp-for="LastName" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="LastName" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label asp-for="NickName" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="NickName" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label asp-for="PortraitID" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="PortraitID" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label asp-for="HomeCountry" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="HomeCountry" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label asp-for="HomeCity" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="HomeCity" class="form-control" />
+			</div>
+		</div>
+		<div class="form-group row">
+			<label asp-for="HomeRegion" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="HomeRegion" class="form-control" />
+			</div>
+
+
+		@if (Model.ActorID.HasValue)
+		{
+			<input asp-action="Update" asp-controller="Movies" type="submit" class="btn btn-primary" value="Update" />
+		}
+		else
+		{
+			<input asp-action="Create" asp-controller="Movies" type="submit" class="btn btn-primary" value="Create" />
+
+		}
+		<a asp-action="Index" asp-controller="Movies" class="btn btn-success">Back</a>
+
+	</form>
+</div>
