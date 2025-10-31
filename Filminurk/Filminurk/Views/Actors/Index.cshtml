@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Filminurk.Models.Actors.ActorsIndexViewModel>
+
+@{
+	int rowNumber = 1;
+}
+
+<div>
+	<a asp-action="Create" asp-controller="Actors" type="Submit" class="btn btn-primary">Add Actor</a>
+</div>
+<div class="h1">
+	Näitlejad
+</div>
+<form method="get">
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Näitleja Nimi</th>
+				<th scope="col">Hüüdnimi</th>
+				<th scope="col">Kodulinn</th>
+				<th scope="col">Kodumaa</th>
+				<th scope="col">Tööriistad</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var actor in Model)
+			{
+				<tr>
+					<td>@rowNumber</td>
+					<td>@actor.FirstName</td>
+					<td>@actor.NickName</td>
+					<td>@actor.HomeCity</td>
+					<td>@actor.HomeRegion</td>
+					<td>
+@*			<a asp-action="Details" asp-controller="Actors" asp-route-id="@Actor.ActorID" class="btn btn-outline-danger">Info</a>
+			<a asp-action="Update" asp-controller="Actors" asp-route-id="@Actor.ActorID" class="btn btn-outline-danger">Uuenda</a>
+			<a asp-action="Delete" asp-controller="Actors" asp-route-id="@Actor.ActorID" class="btn btn-outline-danger">Eemalda</a>
+			*@
+
+					</td>
+				</tr>
+				rowNumber += 1;
+			}
+		</tbody>
+	</table>
+</form>
