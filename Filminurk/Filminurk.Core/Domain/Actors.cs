@@ -14,7 +14,7 @@ namespace Filminurk.Core.Domain
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string NickName { get; set; }
-        public List<string> MoviesActedFor { get; set; }
+        public string? MoviesActedFor { get; set; }
         public int PortraitID { get; set; }
 
         //andmebaasi jaoks vajalik

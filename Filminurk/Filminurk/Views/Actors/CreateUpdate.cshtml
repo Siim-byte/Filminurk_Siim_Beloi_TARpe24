@@ -64,14 +64,14 @@ else
 
 		@if (Model.ActorID.HasValue)
 		{
-			<input asp-action="Update" asp-controller="Movies" type="submit" class="btn btn-primary" value="Update" />
+			<input asp-action="Update" asp-controller="Actors" type="submit" class="btn btn-primary" value="Update" />
 		}
 		else
 		{
-			<input asp-action="Create" asp-controller="Movies" type="submit" class="btn btn-primary" value="Create" />
+			<input asp-action="Create" asp-controller="Actors" type="submit" class="btn btn-primary" value="Create" />
 
 		}
-		<a asp-action="Index" asp-controller="Movies" class="btn btn-success">Back</a>
+		<a asp-action="Index" asp-controller="Actors" class="btn btn-success">Back</a>
 
 	</form>
 </div>

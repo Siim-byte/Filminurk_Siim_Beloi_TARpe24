@@ -25,7 +25,7 @@ namespace Filminurk.ApplicationServices.Services
             actors.FirstName = dto.FirstName;
             actors.LastName = dto.LastName;
             actors.NickName = dto.NickName;
-            actors.MoviesActedFor = dto.MoviesActedFor;
+            actors.MoviesActedFor = string.IsNullOrWhiteSpace(dto.MoviesActedFor) ? null : dto.MoviesActedFor;
             actors.PortraitID = dto.PortraitID;
             actors.EntryCreatedAt = DateTime.Now;
             actors.EntryModifiedAt = DateTime.Now;
@@ -35,6 +35,7 @@ namespace Filminurk.ApplicationServices.Services
 
             await _context.Actors.AddAsync(actors);
             await _context.SaveChangesAsync();
+
             return actors;
         }
         public async Task<Actors> DetailsAsync(Guid id)
