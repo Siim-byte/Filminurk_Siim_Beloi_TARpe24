@@ -71,7 +71,25 @@ namespace Filminurk.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
-            var actors = await _actorsServices.
+            var actors = await _actorsServices.DetailsAsync(id);
+
+            if (actors == null)
+            {
+                return NotFound();
+            }
+            var vm = new ActorsCreateUpdateViewModel();
+            vm.ActorID = actors.ActorID;
+            vm.FirstName = actors.FirstName;
+            vm.LastName = actors.LastName;
+            vm.NickName = actors.NickName;
+            vm.MoviesActedFor = actors.MoviesActedFor;
+            vm.PortraitID = actors.PortraitID;
+            vm.HomeCountry = actors.HomeCountry;
+            vm.HomeCity = actors.HomeCity;
+            vm.HomeRegion = actors.HomeRegion;
+            vm.EntryCreatedAt = actors.EntryCreatedAt;
+            vm.EntryModifiedAt = actors.EntryModifiedAt;
+            return View("CreateUpdate", vm);
         }
     }
 }
