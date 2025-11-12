@@ -45,20 +45,23 @@ namespace Filminurk.ApplicationServices.Services
         }
         public async Task<Actors> Update(ActorsDTO dto)
         {
-            Actors actors = new Actors();
-            actors.ActorID = Guid.NewGuid();
+            var actors = await _context.Actors.FirstOrDefaultAsync(x => x.ActorID == dto.ActorID);
+            if (actors == null)
+            {
+                return null;
+            }
+
             actors.FirstName = dto.FirstName;
             actors.LastName = dto.LastName;
             actors.NickName = dto.NickName;
             actors.MoviesActedFor = dto.MoviesActedFor;
             actors.PortraitID = dto.PortraitID;
-            actors.EntryCreatedAt = DateTime.Now;
             actors.EntryModifiedAt = DateTime.Now;
             actors.HomeCountry = dto.HomeCountry;
             actors.HomeCity = dto.HomeCity;
             actors.HomeRegion = dto.HomeRegion;
 
-            await _context.Actors.AddAsync(actors);
+            _context.Actors.Update(actors);
             await _context.SaveChangesAsync();
             return actors;
         }

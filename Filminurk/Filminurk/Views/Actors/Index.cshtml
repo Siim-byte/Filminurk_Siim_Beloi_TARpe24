@@ -27,10 +27,10 @@
 			{
 				<tr>
 					<td>@rowNumber</td>
-					<td>@actor.FirstName</td>
+						<td>@actor.FirstName @actor.LastName</td>
 					<td>@actor.NickName</td>
 					<td>@actor.HomeCity</td>
-					<td>@actor.HomeRegion</td>
+					<td>@actor.HomeCountry</td>
 					<td>
 						<a asp-action="Details" asp-controller="Actors" asp-route-id="@actor.ActorID" class="btn btn-outline-danger">Info</a>
 						<a asp-action="Update" asp-controller="Actors" asp-route-id="@actor.ActorID" class="btn btn-outline-danger">Uuenda</a>

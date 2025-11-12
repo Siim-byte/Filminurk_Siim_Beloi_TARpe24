@@ -10,7 +10,7 @@ namespace Filminurk.Controllers
     {
         private readonly FilminurkTARpe24Context _context;
         private readonly IActorsServices _actorsServices;
-        
+
         public ActorsController
             (
             FilminurkTARpe24Context context,
@@ -23,14 +23,16 @@ namespace Filminurk.Controllers
         public IActionResult Index()
         {
             var result = _context.Actors
-                .OrderByDescending(x => x.EntryCreatedAt) 
+                .OrderByDescending(x => x.EntryCreatedAt)
                 .Select(x => new ActorsIndexViewModel()
                 {
                     ActorID = x.ActorID,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
                     NickName = x.NickName,
                     HomeCity = x.HomeCity,
-                    HomeRegion = x.HomeRegion,
-                }).ToList(); 
+                    HomeCountry = x.HomeCountry,
+                }).ToList();
 
             return View(result);
         }
@@ -63,7 +65,7 @@ namespace Filminurk.Controllers
                 var result = await _actorsServices.Create(dto);
 
                 if (result == null)
-                { 
+                {
                     return View("CreateUpdate", vm);
                 }
 
@@ -114,6 +116,38 @@ namespace Filminurk.Controllers
             vm.HomeRegion = actors.HomeRegion;
             vm.EntryCreatedAt = actors.EntryCreatedAt;
             vm.EntryModifiedAt = actors.EntryModifiedAt;
+            return View("CreateUpdate", vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(ActorsCreateUpdateViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                var dto = new ActorsDTO()
+                {
+                    ActorID = vm.ActorID.Value,
+                    FirstName = vm.FirstName,
+                    LastName = vm.LastName,
+                    NickName = vm.NickName,
+                    MoviesActedFor = vm.MoviesActedFor,
+                    PortraitID = vm.PortraitID,
+                    HomeCountry = vm.HomeCountry,
+                    HomeCity = vm.HomeCity,
+                    HomeRegion = vm.HomeRegion,
+                    EntryCreatedAt = vm.EntryCreatedAt,
+                    EntryModifiedAt = DateTime.Now
+                };
+
+                var result = await _actorsServices.Update(dto);
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+
             return View("CreateUpdate", vm);
         }
     }
