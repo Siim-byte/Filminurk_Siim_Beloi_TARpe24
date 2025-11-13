@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Filminurk.Core.Dto
 {
-    internal class FavouriteListDTO
+    public class FavouriteListDTO
     {
+
     }
 }
