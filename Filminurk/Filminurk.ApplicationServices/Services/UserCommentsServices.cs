@@ -2,6 +2,7 @@
 using Filminurk.Core.Dto;
 using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,12 @@ namespace Filminurk.ApplicationServices.Services
             await _context.SaveChangesAsync();
 
             return domain;
+        }
+        public async Task<UserComment> DetailAsync(Guid id)
+        {
+            var returnedComment = await _context.UserComments
+                .FirstOrDefaultAsync(x => x.CommentID == id);
+            return returnedComment;
         }
     }
 }

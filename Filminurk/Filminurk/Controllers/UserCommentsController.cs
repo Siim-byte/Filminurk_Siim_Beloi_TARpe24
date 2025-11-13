@@ -48,7 +48,7 @@ namespace Filminurk.Controllers
         {
             //newcommentVM.CommenterUserID = "00000000-0000-0000-000000000000"; //8-4-4-12
             Console.WriteLine(newcommentVM.CommenterUserID);
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
 
                 var dto = new UserCommentDTO() { };                
@@ -74,6 +74,25 @@ namespace Filminurk.Controllers
 
             }
             return View(newcommentVM);
+        }
+        [HttpGet]
+        public async Task<IActionResult> DetailsAdmin(Guid id)
+        {
+            var requestedComment = await _userCommentsServices.DetailAsync(id);
+
+            if (requestedComment == null) { return NotFound(); }
+
+            var commentVM = new UserCommentsIndexViewModel();
+
+            commentVM.CommentID = requestedComment.CommentID;
+            commentVM.CommentBody = requestedComment.CommentBody;
+            commentVM.CommenterUserID = requestedComment.CommenterUserID;
+            commentVM.CommentedScore = requestedComment.CommentedScore;
+            commentVM.CommentCreatedAt = requestedComment.CommentCreatedAt;
+            commentVM.CommentModifiedAt = requestedComment.CommentModifiedAt;
+            commentVM.CommentDeletedAt = requestedComment.CommentDeletedAt;
+
+            return View(commentVM);
         }
 
     }
