@@ -11,7 +11,7 @@ namespace Filminurk.Core.Dto
     {
         [Key]
         public Guid? CommentID { get; set; }
-        public string? CommenterUserID { get; set; }
+        public string CommenterUserID { get; set; }
         public string CommentBody { get; set; }
         public int CommentedScore { get; set; }
         public int? IsHelpful { get; set; }

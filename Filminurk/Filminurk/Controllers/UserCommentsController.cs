@@ -48,7 +48,7 @@ namespace Filminurk.Controllers
         {
             //newcommentVM.CommenterUserID = "00000000-0000-0000-000000000000"; //8-4-4-12
             Console.WriteLine(newcommentVM.CommenterUserID);
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
 
                 var dto = new UserCommentDTO() { };                
@@ -84,7 +84,7 @@ namespace Filminurk.Controllers
 
             var commentVM = new UserCommentsIndexViewModel();
 
-            commentVM.CommentID = requestedComment.CommentID;
+            commentVM.CommentID = (Guid)requestedComment.CommentID;
             commentVM.CommentBody = requestedComment.CommentBody;
             commentVM.CommenterUserID = requestedComment.CommenterUserID;
             commentVM.CommentedScore = requestedComment.CommentedScore;
