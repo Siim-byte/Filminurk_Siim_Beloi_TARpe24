@@ -91,6 +91,8 @@ namespace Filminurk.Controllers
             commentVM.CommentCreatedAt = requestedComment.CommentCreatedAt;
             commentVM.CommentModifiedAt = requestedComment.CommentModifiedAt;
             commentVM.CommentDeletedAt = requestedComment.CommentDeletedAt;
+            commentVM.IsHelpful = requestedComment.IsHelpful;
+            commentVM.IsHarmful = requestedComment.IsHarmful;
 
             return View(commentVM);
         }
