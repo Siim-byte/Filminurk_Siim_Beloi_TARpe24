@@ -1,5 +1,8 @@
-﻿using Filminurk.Data;
+﻿using Filminurk.Core.Dto;
+using Filminurk.Core.ServiceInterface;
+using Filminurk.Data;
 using Filminurk.Models.UserComments;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Filminurk.Controllers
@@ -7,9 +10,15 @@ namespace Filminurk.Controllers
     public class UserCommentsController : Controller
     {
         private readonly FilminurkTARpe24Context _context;
-        public UserCommentsController(FilminurkTARpe24Context context)
+        private readonly IUserCommentsServices _userCommentsServices;
+        public UserCommentsController
+            (
+            FilminurkTARpe24Context context,
+            IUserCommentsServices userCommentsServices
+            )
         {
             _context = context;
+            _userCommentsServices = userCommentsServices;
         }
         public IActionResult Index()
         {
@@ -26,5 +35,37 @@ namespace Filminurk.Controllers
                 );
             return View(result);
         }
+        [HttpGet]
+        public IActionResult NewComment()
+        {
+            //TODO: erista kas tegemist on admini, või tavakasutajaga
+            UserCommentsCreateViewModel newcomment = new();
+            return View();
+        }
+        [HttpPost, ActionName("NewComment")]
+        //Meetodile ei tohi panna allowanonymous
+        public async Task<IActionResult> NewCommentPost(UserCommentsCreateViewModel newcommentVM)
+        {
+            var dto = new UserCommentDTO()
+            {
+                CommentID = (Guid)newcommentVM.CommentID,
+                CommentBody = newcommentVM.CommentBody,
+                CommenterUserID = newcommentVM.CommenterUserID,
+                CommentedScore = newcommentVM.CommentedScore,
+                CommentCreatedAt = newcommentVM.CommentCreatedAt,
+                CommentModifiedAt = newcommentVM.CommentModifiedAt,
+                IsHelpful = (int)newcommentVM.IsHelpful,
+                IsHarmful = (int)newcommentVM.IsHarmful
+            };
+            var result = await _userCommentsServices.NewComment(dto);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            //TODO: erista ära kas tegu on admini või kasutajaga, admin tagastub admin-comments-index, kasutaja aga vastava filmi juurde
+            return RedirectToAction(nameof(Index));
+            //return RedirectToAction("Details", "Movies", id)
+        }
+
     }
 }
