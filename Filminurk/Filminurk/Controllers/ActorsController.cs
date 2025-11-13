@@ -150,5 +150,39 @@ namespace Filminurk.Controllers
 
             return View("CreateUpdate", vm);
         }
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var actors = await _actorsServices.DetailsAsync(id);
+
+            if (actors == null)
+            {
+                return NotFound();
+            }
+            var vm = new ActorsDeleteViewModel();
+            vm.ActorID = actors.ActorID;
+            vm.FirstName = actors.FirstName;
+            vm.LastName = actors.LastName;
+            vm.NickName = actors.NickName;
+            vm.MoviesActedFor = actors.MoviesActedFor;
+            vm.PortraitID = actors.PortraitID;
+            vm.HomeCountry = actors.HomeCountry;
+            vm.HomeCity = actors.HomeCity;
+            vm.HomeRegion = actors.HomeRegion;
+            vm.EntryCreatedAt = actors.EntryCreatedAt;
+            vm.EntryModifiedAt = actors.EntryModifiedAt;
+            return View(vm);
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(Guid ActorID)
+        {
+            var actors = await _actorsServices.Delete(ActorID);
+            if (actors == null)
+            {
+                return NotFound();
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

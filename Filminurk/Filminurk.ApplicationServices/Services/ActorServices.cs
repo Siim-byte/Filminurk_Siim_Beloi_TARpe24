@@ -80,6 +80,10 @@ namespace Filminurk.ApplicationServices.Services
         {
             var result = await _context.Actors.FirstOrDefaultAsync(m => m.ActorID == id);
 
+            if (result == null)
+            {
+                return null;
+            }
             _context.Actors.Remove(result);
             await _context.SaveChangesAsync();
 
