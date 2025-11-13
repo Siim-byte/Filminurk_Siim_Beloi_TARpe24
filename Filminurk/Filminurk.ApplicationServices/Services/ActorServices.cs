@@ -25,7 +25,7 @@ namespace Filminurk.ApplicationServices.Services
             actors.FirstName = dto.FirstName;
             actors.LastName = dto.LastName;
             actors.NickName = dto.NickName;
-            actors.MoviesActedFor = string.IsNullOrWhiteSpace(dto.MoviesActedFor) ? null : dto.MoviesActedFor;
+            actors.MoviesActedFor = dto.MoviesActedFor;
             actors.PortraitID = dto.PortraitID;
             actors.EntryCreatedAt = DateTime.Now;
             actors.EntryModifiedAt = DateTime.Now;

@@ -53,7 +53,7 @@ namespace Filminurk.Controllers
                     FirstName = vm.FirstName,
                     LastName = vm.LastName,
                     NickName = vm.NickName,
-                    MoviesActedFor = vm.MoviesActedFor,
+                    MoviesActedFor = vm.MoviesActedFor ?? new List<string>(),
                     PortraitID = vm.PortraitID,
                     HomeCountry = vm.HomeCountry,
                     HomeCity = vm.HomeCity,
@@ -81,18 +81,22 @@ namespace Filminurk.Controllers
             {
                 return NotFound();
             }
-            var vm = new ActorsDetailsViewModel();
-            vm.ActorID = actors.ActorID;
-            vm.FirstName = actors.FirstName;
-            vm.LastName = actors.LastName;
-            vm.NickName = actors.NickName;
-            vm.MoviesActedFor = actors.MoviesActedFor;
-            vm.PortraitID = actors.PortraitID;
-            vm.HomeCountry = actors.HomeCountry;
-            vm.HomeCity = actors.HomeCity;
-            vm.HomeRegion = actors.HomeRegion;
-            vm.EntryCreatedAt = actors.EntryCreatedAt;
-            vm.EntryModifiedAt = actors.EntryModifiedAt;
+
+            var vm = new ActorsDetailsViewModel()
+            {
+                ActorID = actors.ActorID,
+                FirstName = actors.FirstName,
+                LastName = actors.LastName,
+                NickName = actors.NickName,
+                MoviesActedFor = actors.MoviesActedFor,
+                PortraitID = actors.PortraitID,
+                HomeCountry = actors.HomeCountry,
+                HomeCity = actors.HomeCity,
+                HomeRegion = actors.HomeRegion,
+                EntryCreatedAt = actors.EntryCreatedAt,
+                EntryModifiedAt = actors.EntryModifiedAt
+            };
+
             return View(vm);
         }
         [HttpGet]
@@ -129,7 +133,7 @@ namespace Filminurk.Controllers
                     FirstName = vm.FirstName,
                     LastName = vm.LastName,
                     NickName = vm.NickName,
-                    MoviesActedFor = vm.MoviesActedFor,
+                    MoviesActedFor = vm.MoviesActedFor ?? new List<string>(),
                     PortraitID = vm.PortraitID,
                     HomeCountry = vm.HomeCountry,
                     HomeCity = vm.HomeCity,

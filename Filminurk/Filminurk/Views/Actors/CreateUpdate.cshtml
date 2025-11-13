@@ -37,6 +37,12 @@ else
 				<input asp-for="NickName" class="form-control" />
 			</div>
 		</div>
+			<div class="form-group row">
+			<label asp-for="MoviesActedFor" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="MoviesActedFor" class="form-control" />
+			</div>
+		</div>
 		<div class="form-group row">
 			<label asp-for="PortraitID" class="col-sm-2 col-form-label"></label>
 			<div class="col-sm-10">
@@ -46,7 +52,10 @@ else
 		<div class="form-group row">
 			<label asp-for="HomeCountry" class="col-sm-2 col-form-label"></label>
 			<div class="col-sm-10">
-				<input asp-for="HomeCountry" class="form-control" />
+				<select asp-for="HomeCountry" asp-items="Html.GetEnumSelectList<HomeCountry>()">
+					<option value="">-- Vali Koduriik --</option>
+				</select>
+				<span asp-validation-for="HomeCountry"></span>
 			</div>
 		</div>
 		<div class="form-group row">
