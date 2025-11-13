@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<Filminurk.Models.UserComments.UserCommentsIndexViewModel>
 @{
 	int rowNumber = 1;
-
 }
 <div>
 	<a asp-action="NewComment" asp-controller="UserComments" type="submit" class="btn btn-primary">Make new comment</a>
@@ -9,9 +8,8 @@
 <div class="h1">
 	Kasutajate arvustused:
 </div>
-<div>
-	<form method="get">
-		<tabel class=a"tabel table-hover">
+<form method="get">
+	<table class="table table-hover">
 			<thead>
 				<tr>
 					<th scope="col">JKN</th>
@@ -19,7 +17,7 @@
 					<th scope="col">CommentBody</th>
 					<th scope="col">IsHarmful</th>
 					<th scope="col">CommentsCreatedAt</th>
-					<th></th>
+					<th scope="col">Tööriistad</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -37,9 +35,8 @@
 							<a asp-action="DeleteComment" asp-controller="UserComments" asp-route-id="@comment.CommentID" class="btn btn-primary">Delete</a>
 						</td>
 					</tr>
-					rowNumber++;
+					rowNumber += 1;
 				}
 			</tbody>
-		</tabel>
-	</form>
-</div>
+		</table>
+</form>

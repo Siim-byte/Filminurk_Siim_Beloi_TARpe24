@@ -27,7 +27,7 @@ namespace Filminurk.Controllers
                 {
                     CommentID = c.CommentID,
                     CommentBody = c.CommentBody,
-                    IsHarmful = c.IsHarmful,
+                    IsHarmful = (int)c.IsHarmful,
                     CommentCreatedAt = c.CommentCreatedAt,
 
 
@@ -46,25 +46,34 @@ namespace Filminurk.Controllers
         //Meetodile ei tohi panna allowanonymous
         public async Task<IActionResult> NewCommentPost(UserCommentsCreateViewModel newcommentVM)
         {
-            var dto = new UserCommentDTO()
+            //newcommentVM.CommenterUserID = "00000000-0000-0000-000000000000"; //8-4-4-12
+            Console.WriteLine(newcommentVM.CommenterUserID);
+            if (ModelState.IsValid)
             {
-                CommentID = (Guid)newcommentVM.CommentID,
-                CommentBody = newcommentVM.CommentBody,
-                CommenterUserID = newcommentVM.CommenterUserID,
-                CommentedScore = newcommentVM.CommentedScore,
-                CommentCreatedAt = newcommentVM.CommentCreatedAt,
-                CommentModifiedAt = newcommentVM.CommentModifiedAt,
-                IsHelpful = (int)newcommentVM.IsHelpful,
-                IsHarmful = (int)newcommentVM.IsHarmful
-            };
-            var result = await _userCommentsServices.NewComment(dto);
-            if (result == null)
-            {
-                return NotFound();
+
+                var dto = new UserCommentDTO() { };                
+                dto.CommentID = newcommentVM.CommentID;
+                dto.CommentBody = newcommentVM.CommentBody;
+                dto.CommenterUserID = newcommentVM.CommenterUserID;
+                dto.CommentedScore = newcommentVM.CommentedScore;
+                dto.CommentCreatedAt = newcommentVM.CommentCreatedAt;
+                dto.CommentModifiedAt = newcommentVM.CommentModifiedAt;
+                dto.CommentDeletedAt = newcommentVM.CommentDeletedAt;
+                dto.IsHelpful = newcommentVM.IsHelpful;
+                dto.IsHarmful = newcommentVM.IsHarmful;
+                
+                var result = await _userCommentsServices.NewComment(dto);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                //TODO: erista ära kas tegu on admini või kasutajaga, admin tagastub admin-comments-index, kasutaja aga vastava filmi juurde
+                return RedirectToAction(nameof(Index));
+
+                //return RedirectToAction("Details", "Movies", id)
+
             }
-            //TODO: erista ära kas tegu on admini või kasutajaga, admin tagastub admin-comments-index, kasutaja aga vastava filmi juurde
-            return RedirectToAction(nameof(Index));
-            //return RedirectToAction("Details", "Movies", id)
+            return View(newcommentVM);
         }
 
     }

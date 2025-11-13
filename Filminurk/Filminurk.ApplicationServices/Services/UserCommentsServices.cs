@@ -13,15 +13,12 @@ namespace Filminurk.ApplicationServices.Services
     public class UserCommentsServices : IUserCommentsServices
     {
         private readonly FilminurkTARpe24Context _context;
-        private readonly IUserCommentsServices _userCommentsServices;
         public UserCommentsServices
             (
-            FilminurkTARpe24Context context,
-            IUserCommentsServices userCommentsServices
+            FilminurkTARpe24Context context
             )
         {
             _context = context;
-            _userCommentsServices = userCommentsServices;
 
         }
         public async Task<UserComment> NewComment(UserCommentDTO newcommentDTO)
@@ -33,8 +30,8 @@ namespace Filminurk.ApplicationServices.Services
             domain.CommentedScore = newcommentDTO.CommentedScore;
             domain.CommentCreatedAt = DateTime.Now;
             domain.CommentModifiedAt = DateTime.Now;
-            domain.IsHelpful = newcommentDTO.IsHelpful;
-            domain.IsHarmful = newcommentDTO.IsHarmful;
+            domain.IsHelpful = 0;
+            domain.IsHarmful = 0;
              
             await _context.UserComments.AddAsync(domain);
             await _context.SaveChangesAsync();
