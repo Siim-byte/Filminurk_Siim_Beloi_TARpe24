@@ -84,7 +84,7 @@ namespace Filminurk.Controllers
 
             var commentVM = new UserCommentsIndexViewModel();
 
-            commentVM.CommentID = (Guid)requestedComment.CommentID;
+            commentVM.CommentID = requestedComment.CommentID;
             commentVM.CommentBody = requestedComment.CommentBody;
             commentVM.CommenterUserID = requestedComment.CommenterUserID;
             commentVM.CommentedScore = requestedComment.CommentedScore;
@@ -93,8 +93,33 @@ namespace Filminurk.Controllers
             commentVM.CommentDeletedAt = requestedComment.CommentDeletedAt;
             commentVM.IsHelpful = requestedComment.IsHelpful;
             commentVM.IsHarmful = requestedComment.IsHarmful;
-
+            
             return View(commentVM);
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeleteAdmin(Guid id)
+        {
+            var deleteEntry = await _userCommentsServices.DetailAsync(id);
+            if (deleteEntry == null) { return NotFound(); }
+
+            var commentVM = new UserCommentsIndexViewModel();
+            commentVM.CommentID = deleteEntry.CommentID;
+            commentVM.CommentBody = deleteEntry.CommentBody;
+            commentVM.CommenterUserID = deleteEntry.CommenterUserID;
+            commentVM.CommentedScore = deleteEntry.CommentedScore;
+            commentVM.CommentCreatedAt = deleteEntry.CommentCreatedAt;
+            commentVM.CommentModifiedAt = deleteEntry.CommentModifiedAt;
+            commentVM.CommentDeletedAt = deleteEntry.CommentDeletedAt;
+            commentVM.IsHelpful = deleteEntry.IsHelpful;
+            commentVM.IsHarmful = deleteEntry.IsHarmful;
+            return View("DeleteAdmin",commentVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteAdminPost(Guid id)
+        {
+            var deleteThisComment = await _userCommentsServices.Delete(id);
+            if (deleteThisComment == null) { return NotFound(); }
+            return RedirectToAction("Index");
         }
 
     }
