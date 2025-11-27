@@ -5,10 +5,10 @@ namespace Filminurk.Models.FavouriteLists
     public class FavouriteListUserCreateViewModel
     {
         public Guid? FavouriteListID { get; set; }
-        public string ListBelongToUser { get; set; }
+        public string? ListBelongToUser { get; set; }
         public bool IsMovieOrActor { get; set; }
-        public string ListName { get; set; }
-        public string ListDescription { get; set; }
+        public string? ListName { get; set; }
+        public string? ListDescription { get; set; }
         public bool IsPrivate { get; set; }
         public List<Movie>? ListOfMovies { get; set; }
         //public List<Actor>? ListOfMovies { get; set; }

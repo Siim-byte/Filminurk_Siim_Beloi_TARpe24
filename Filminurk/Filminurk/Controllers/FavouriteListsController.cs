@@ -103,7 +103,45 @@ namespace Filminurk.Controllers
 
 
         }
-
+        [HttpGet]
+        public async Task<IActionResult> UserDetails(Guid id, Guid thisuserid)
+        {
+            if (id == null || thisuserid == null)
+            {
+                return BadRequest();
+                //TODO: return corresponding errorviews. id not foud for list, and user login error for userid
+            }
+            var thisList = _context.FavouriteLists
+                .Where(tl => tl.FavouriteListID == id && tl.ListBelongToUser == thisuserid.ToString())
+                .Select(
+                stl => new FavouriteListUserDetailsViewModel()
+                {
+                    FavouriteListID = stl.FavouriteListID,
+                    ListBelongToUser = stl.ListBelongToUser,
+                    IsMovieOrActor = stl.IsMovieOrActor,
+                    ListName = stl.ListName,
+                    ListDescription = stl.ListDescription,
+                    IsPrivate = stl.IsPrivate,
+                    ListOfMovies = stl.ListOfMovies,
+                    IsReported = stl.IsReported,
+                    Image = _context.FilesToDatabase
+                    .Where(i => i.ListID == stl.FavouriteListID)
+                    .Select(si => new FavouriteListIndexImageViewModel()
+                    {
+                        ImageID = si.ImageID,
+                        ListID = si.ListID,
+                        ImageData = si.ImageData,
+                        ImageTitle = si.ImageTitle,
+                        Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(si.ImageData))
+                    }).ToList().First()
+                }).FirstOrDefault();
+            //add viewdata attribute here later, to discern between user and admin
+            if (thisList == null)
+            {
+                return NotFound();
+            }
+            return View("Details", (FavouriteListUserDetailsViewModel)thisList);
+        }
         public List<Guid> MovieToID(List<Movie> listOfMovies)
         {
             var result = new List<Guid>();

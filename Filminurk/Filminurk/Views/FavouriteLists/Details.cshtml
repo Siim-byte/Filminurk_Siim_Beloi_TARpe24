@@ -1,1 +1,48 @@
-﻿
+﻿@model Filminurk.Models.FavouriteLists.FavouriteListUserDetailsViewModel
+@{
+    int rowNumber = 1;
+}
+<div>
+    @if(Model.IsReported == true)
+    {
+        @:Sinu nimekiri rikub kogukonna reegleid<br/>
+        @:Oleme seadnud nimekirja privaatseks kuni admin selle üle vaatab.<br/>
+    }
+    <table>
+        <tr>@Model.ListName</tr>
+        <tr><partial name="_ImageIndex" model="@Model.Image" /></tr>
+        
+    </table>
+</div>
+<div>
+    <table class="table">
+        @foreach(var movie in Model.ListOfMovies)
+        {
+            <tr>
+                <table class="table" style="border:thick;">
+                    <tr>
+                        <td colspan="2">@movie.Title</td>
+                    </tr>
+                    <tr>
+                        <td>(Image HERER)</td>
+                        <td>
+                            <table>
+                                <tr>@movie.Description</tr>
+                                <tr>@movie.Director</tr>
+                                <tr>@movie.DeadCounter</tr>
+                                <tr>@movie.CurrentRating</tr>
+                                <tr>@movie.AliveCounter</tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </tr>         
+        }
+    </table>
+    <div>
+        <input asp-action="UserDelete" asp-controller="FavouriteListsontroller" asp-route-id="@Model.FavouriteListID" type="submit" class="btn btn-danger" value="Kustuta Nimekiri" />
+        <input asp-action="UserTogglePrivacy" asp-controller="FavouriteListsontroller" asp-route-id="@Model.FavouriteListID" type="submit" class="btn btn-warning" value="Muuda nimekiri privaatseks" />
+        <input asp-action="UserEditList" asp-controller="FavouriteListsontroller" asp-route-id="@Model.FavouriteListID" type="submit" class="btn btn-success" value="Muuda nimekiri andmeid" />
+        <a asp-action="Index" asp-controller="FavouriteListsController" class="btn btn-light"></a>
+    </div>
+</div>

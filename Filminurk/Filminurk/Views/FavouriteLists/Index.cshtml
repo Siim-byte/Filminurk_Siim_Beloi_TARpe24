@@ -51,9 +51,13 @@
                         <table>
                             <tr>
                                 <td><strong>List</strong></td>
+                                <br />
                                 <td colspan="2">
 
-                                    <a asp-action="ListDetailslistOwner" asp-controller="FavouriteLists" asp-route-id="@list.FavouriteListID">@list.ListName </a>
+                                    <a asp-action="UserDetails" 
+                                    asp-controller="FavouriteLists" 
+                                    asp-route-id="@list.FavouriteListID"
+                                    asp-route-thisuserid="thisuserid">@list.ListName </a>
                                 </td>
                             </tr>
                             <tr>
@@ -61,8 +65,10 @@
                                     @foreach(var image in list.Image)
                                     {
                                         <partial name="_ImageIndex" model="image" />
-                                    <td>width="128" src="~/lib/defaultassets/image/noposter.png"</td>
+                                        
                                     }
+                                    <img width="128" src="~/lib/defaultassets/image/noposter.png" />
+                               
                                 </td>
                                 
                                 <td>@list.ListDescription</td>
