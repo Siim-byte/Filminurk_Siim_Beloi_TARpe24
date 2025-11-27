@@ -1,4 +1,5 @@
 ﻿using Filminurk.Core.Domain;
+using Filminurk.Core.Dto;
 
 namespace Filminurk.Models.Actors
 {
@@ -10,7 +11,9 @@ namespace Filminurk.Models.Actors
         public string? NickName { get; set; }
         public List<string>? MoviesActedFor { get; set; }
         public int?   PortraitID { get; set; }
-
+        public List<IFormFile>? Files { get; set; }
+        public List<ImageViewModel> Images { get; set; } = new List<ImageViewModel>();
+        public IEnumerable<FileToApiDTO>? FileToApiDTOs { get; set; } = new List<FileToApiDTO>();
         //andmebaasi jaoks vajalik
 
         public DateTime? EntryCreatedAt { get; set; }

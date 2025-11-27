@@ -15,5 +15,6 @@ namespace Filminurk.Core.Domain
         public string? ExistingFilePath { get; set; }
         public Guid? MovieID { get; set; }
         public bool? IsPoster { get; set; } // määrab ära kas plt on poster või mitte
+        public Guid ActorID { get; set; }
     }
 }

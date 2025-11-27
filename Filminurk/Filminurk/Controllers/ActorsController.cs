@@ -3,6 +3,7 @@ using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
 using Filminurk.Models.Actors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Filminurk.Controllers
 {
@@ -59,7 +60,16 @@ namespace Filminurk.Controllers
                     HomeCity = vm.HomeCity,
                     HomeRegion = vm.HomeRegion,
                     EntryCreatedAt = DateTime.Now,
-                    EntryModifiedAt = DateTime.Now
+                    EntryModifiedAt = DateTime.Now,
+                    Files = vm.Files,
+                    FileToApiDTOs = vm.Images
+                    .Select(x => new FileToApiDTO
+                    {
+                        ImageID = x.ImageID,
+                        ExistingFilePath = x.FilePath,
+                        ActorID = x.ActorID,
+                        IsPoster = x.IsPoster,
+                    }).ToArray()
                 };
 
                 var result = await _actorsServices.Create(dto);
@@ -163,6 +173,14 @@ namespace Filminurk.Controllers
             {
                 return NotFound();
             }
+            var images = await _context.FilesToApi
+                .Where(x => x.ActorID == id)
+                .Select(y => new Models.Actors.ImageViewModel
+                {
+                    FilePath = y.ExistingFilePath,
+                    ImageID = y.ImageID,
+                }).ToArrayAsync();
+
             var vm = new ActorsDeleteViewModel();
             vm.ActorID = actors.ActorID;
             vm.FirstName = actors.FirstName;

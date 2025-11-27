@@ -1,4 +1,5 @@
 ﻿using Filminurk.Core.Domain;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,5 +27,7 @@ namespace Filminurk.Core.Dto
         public HomeCountry? HomeCountry { get; set; }
         public string? HomeCity { get; set; }
         public string? HomeRegion { get; set; }
+        public List<IFormFile>? Files { get; set; }
+        public object FileToApiDTOs { get; set; }
     }
 }
