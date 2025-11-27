@@ -75,18 +75,26 @@ namespace Filminurk.Controllers
             newListDto.ListName = vm.ListName;
             newListDto.ListDescription = vm.ListDescription;
             newListDto.IsMovieOrActor = vm.IsMovieOrActor;
-            newListDto.IsPrivate = vm.IsPrivate;
+            newListDto.IsPrivate = (bool)vm.IsPrivate;
             newListDto.ListCreatedAt = DateTime.UtcNow;
             newListDto.ListBelongToUser = "00000000-0000-0000-0000-000000000001";
             newListDto.ListModifiedAt = DateTime.UtcNow;
             newListDto.ListDeletedAt = vm.ListDeletedAt;
-            List<Guid> convertedIDs = new List<Guid>();
-            if (newListDto.ListOfMovies != null)
-            {
-                convertedIDs = MovieToID(newListDto.ListOfMovies);
+            //List<Guid> convertedIDs = new List<Guid>();
+            //if (newListDto.ListOfMovies != null)
+            //{
+            //    convertedIDs = MovieToID(newListDto.ListOfMovies);
 
+            //}
+            var listofmoviestoadd = new List<Movie>();
+            foreach (var movieId in tempParse)
+            {
+                var thismovie = _context.Movies.Where(tm => tm.ID == movieId).ToArray().Take(1);
+                listofmoviestoadd.Add((Movie)thismovie);
             }
-            var newList = await _favouriteListsServices.Create(newListDto, convertedIDs);
+            newListDto.ListOfMovies = listofmoviestoadd;
+
+            var newList = await _favouriteListsServices.Create(newListDto/*, convertedIDs*/);
             if (newList != null)
             {
                 return BadRequest();
@@ -101,7 +109,7 @@ namespace Filminurk.Controllers
             var result = new List<Guid>();
             foreach (var movie in listOfMovies)
             {
-                result.Add(movie.ID);
+                result.Add((Guid)movie.ID);
             }
             return result;
         }

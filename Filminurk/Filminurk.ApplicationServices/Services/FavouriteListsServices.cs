@@ -27,8 +27,7 @@ namespace Filminurk.ApplicationServices.Services
                 .FirstOrDefaultAsync(x => x.FavouriteListID == id);
             return result;
         }
-        public async Task<FavouriteList> Create(FavouriteListDTO dto, List<Movie>
-            selectedMovies)
+        public async Task<FavouriteList> Create(FavouriteListDTO dto/*, List<Movie>selectedMovies*/)
         {
             FavouriteList newList = new();
             newList.FavouriteListID = Guid.NewGuid();

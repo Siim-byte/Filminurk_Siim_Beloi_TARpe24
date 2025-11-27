@@ -1,11 +1,13 @@
 ﻿using Filminurk.Core.Domain;
 using Filminurk.Models.Movies;
+using System.ComponentModel.DataAnnotations;
 
 namespace Filminurk.Models.FavouriteLists
 {
     public class FavouriteListsIndexViewModel
     {
-        public Guid FavouriteListID { get; set; }
+        [Key]
+        public Guid? FavouriteListID { get; set; }
         public string ListBelongToUser { get; set; }
         public bool IsMovieOrActor { get; set; }
         public string ListName { get; set; }
