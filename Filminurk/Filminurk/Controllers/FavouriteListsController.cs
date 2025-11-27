@@ -45,7 +45,7 @@ namespace Filminurk.Controllers
             return View(resultingLists);
         }
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult>Create(FavouriteListUserCreateViewModel model)
         {
             var movies = _context.Movies
                 .OrderBy(m => m.Title)
@@ -77,7 +77,7 @@ namespace Filminurk.Controllers
             newListDto.IsMovieOrActor = vm.IsMovieOrActor;
             newListDto.IsPrivate = (bool)vm.IsPrivate;
             newListDto.ListCreatedAt = DateTime.UtcNow;
-            newListDto.ListBelongToUser = "00000000-0000-0000-0000-000000000001";
+            newListDto.ListBelongToUser = Guid.NewGuid().ToString();
             newListDto.ListModifiedAt = DateTime.UtcNow;
             newListDto.ListDeletedAt = vm.ListDeletedAt;
             //List<Guid> convertedIDs = new List<Guid>();
@@ -89,13 +89,13 @@ namespace Filminurk.Controllers
             var listofmoviestoadd = new List<Movie>();
             foreach (var movieId in tempParse)
             {
-                var thismovie = _context.Movies.Where(tm => tm.ID == movieId).ToArray().Take(1);
+                var thismovie = (Movie)_context.Movies.Where(tm => tm.ID == movieId).ToList().First();
                 listofmoviestoadd.Add((Movie)thismovie);
             }
             newListDto.ListOfMovies = listofmoviestoadd;
 
             var newList = await _favouriteListsServices.Create(newListDto/*, convertedIDs*/);
-            if (newList != null)
+            if (newList == null)
             {
                 return BadRequest();
             }
