@@ -57,7 +57,7 @@
                                     <a asp-action="UserDetails" 
                                     asp-controller="FavouriteLists" 
                                     asp-route-id="@list.FavouriteListID"
-                                    asp-route-thisuserid="thisuserid">@list.ListName </a>
+                                       asp-route-thisuserid="@list.ListBelongToUser">@list.ListName</a>
                                 </td>
                             </tr>
                             <tr>

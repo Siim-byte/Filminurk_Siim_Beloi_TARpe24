@@ -1,15 +1,29 @@
 ﻿@model Filminurk.Models.FavouriteLists.FavouriteListIndexImageViewModel
+
+@if (Model == null || Model.ImageData == null || Model.ImageData.Length == 0)
+{
+    <img width="128" src="~/lib/defaultassets/image/noposter.png" />
+}
+else
+{
+    <img class="card-img-top" src="@Model.Image" alt="@Model.ImageTitle" />
+}
+
+@* ﻿@model Filminurk.Models.FavouriteLists.FavouriteListIndexImageViewModel
+
 <div>
     @if (!Model.Image.Any())
     {
         <p>Pilte pole</p>
     }
 </div>
+
 @if (Model.ImageTitle == "Poster")
 {
-    <img class="card-img-top" src="@Model.Image" asp+asp-append-version="true"/>
+    <img class="card-img-top" src="@Model.Image" asp-append-version="true" />
+
 }
 else
 {
-    <img width="128" src="~/lib/defaultassets/image/noposter.png" />
-}
+    <td><img width="128" src="~/lib/defaultassets/image/noposter.png" /></td>
+} *@
