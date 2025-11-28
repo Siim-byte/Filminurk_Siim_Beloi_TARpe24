@@ -146,37 +146,37 @@ namespace Filminurk.Controllers
 
             return View("Details", thisList);
         }
-        [HttpPost]
-        public async Task<IActionResult> UserTogglePrivacy(Guid id)
-        {
-            FavouriteListDTO thisList = _favouriteListsServices.DetailsAsync(id);
+        //[HttpPost]
+        //public async Task<IActionResult> UserTogglePrivacy(Guid id)
+        //{
+        //    FavouriteListDTO thisList = _favouriteListsServices.DetailsAsync(id);
 
-            FavouriteListDTO updatedList = new FavouriteListDTO();
-            updatedList.FavouriteListID = thisList.FavouriteListID;
-            updatedList.ListBelongToUser = thisList.ListBelongToUser;
-            updatedList.IsMovieOrActor = thisList.IsMovieOrActor;
-            updatedList.ListName = thisList.ListName;
-            updatedList.ListDescription = thisList.ListDescription;
-            updatedList.IsPrivate = thisList.IsPrivate;
-            updatedList.ListOfMovies = thisList.ListOfMovies;
-            updatedList.IsReported = thisList.IsReported;
-            updatedList.ListCreatedAt = thisList.ListCreatedAt;
-            updatedList.ListModifiedAt = DateTime.Now;
-            updatedList.ListDeletedAt = updatedList.ListDeletedAt;
+        //    FavouriteListDTO updatedList = new FavouriteListDTO();
+        //    updatedList.FavouriteListID = thisList.FavouriteListID;
+        //    updatedList.ListBelongToUser = thisList.ListBelongToUser;
+        //    updatedList.IsMovieOrActor = thisList.IsMovieOrActor;
+        //    updatedList.ListName = thisList.ListName;
+        //    updatedList.ListDescription = thisList.ListDescription;
+        //    updatedList.IsPrivate = thisList.IsPrivate;
+        //    updatedList.ListOfMovies = thisList.ListOfMovies;
+        //    updatedList.IsReported = thisList.IsReported;
+        //    updatedList.ListCreatedAt = thisList.ListCreatedAt;
+        //    updatedList.ListModifiedAt = DateTime.Now;
+        //    updatedList.ListDeletedAt = updatedList.ListDeletedAt;
 
-            thisList.IsPrivate = !thisList.IsPrivate;
-            _favouriteListsServices.Update(thisList);
-            return View("Details");
-        }
+        //    thisList.IsPrivate = !thisList.IsPrivate;
+        //    _favouriteListsServices.Update(thisList);
+        //    return View("Details");
+        //}
 
-        public List<Guid> MovieToID(List<Movie> listOfMovies)
-        {
-            var result = new List<Guid>();
-            foreach (var movie in listOfMovies)
-            {
-                result.Add((Guid)movie.ID);
-            }
-            return result;
-        }
+        //public List<Guid> MovieToID(List<Movie> listOfMovies)
+        //{
+        //    var result = new List<Guid>();
+        //    foreach (var movie in listOfMovies)
+        //    {
+        //        result.Add((Guid)movie.ID);
+        //    }
+        //    return result;
+        //}
     }
 }

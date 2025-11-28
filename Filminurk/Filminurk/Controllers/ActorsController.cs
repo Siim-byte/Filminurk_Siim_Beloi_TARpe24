@@ -23,19 +23,18 @@ namespace Filminurk.Controllers
         }
         public IActionResult Index()
         {
-            var result = _context.Actors
-                .OrderByDescending(x => x.EntryCreatedAt)
-                .Select(x => new ActorsIndexViewModel()
-                {
-                    ActorID = x.ActorID,
+            var result = _context.Actors.Select(x => new ActorsIndexViewModel
+            {
+                ActorID = x.ActorID,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     NickName = x.NickName,
                     HomeCity = x.HomeCity,
                     HomeCountry = x.HomeCountry,
-                }).ToList();
-
+            }).ToList();
             return View(result);
+
+
         }
         [HttpGet]
         public IActionResult Create()
