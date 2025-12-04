@@ -25,5 +25,7 @@ namespace Filminurk.Core.Dto
         public DateTime? ListModifiedAt { get; set; }
         public DateTime? ListDeletedAt { get; set; }
         public bool IsReported { get; set; } = false;
+
+
     }
 }

@@ -6,25 +6,27 @@
 }
 
 <div>
+	<h1>USERTOGGLEPRIVACY</h1>
 	@if (Model.IsReported == true)
 	{
 		@: Sinu nimekiri on perses
-		@: Oleme seadnud nimekirja privaatseks, kuni admin selle üle vaatab. <br/>
+		@: Oleme seadnud nimekirja privaatseks, kuni admin selle üle vaatab. <br />
 	}
 	<table>
 		<tr>@Model.ListName</tr>
-		 <tr>
-@* 			<partial name="_ImageIndex" model="@Model.Image" /> *@
-		</tr> 
+		@* <tr>
+			<partial name="_ImageIndex" model="@Model.Image" />
+		</tr> *@
 	</table>
 </div>
 
 <div>
+	<form method="post">
 	<table class="table">
 		@foreach (var movie in Model.ListOfMovies)
 		{
 			<tr>
-				<table class="table" style="border:thick">
+				<table class="table" style="border:thick;">
 					<tr>
 						<td colspan="2">@movie.Title</td>
 					</tr>
@@ -46,14 +48,10 @@
 		}
 	</table>
 	<div>
-		<form>
 
 			<input asp-action="UserTogglePrivacy" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"
-				   formethod="get" class="btn btn-warning" value="Muuda nimekiri privaatseks" />
-			<input asp-action="UserDelete" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID" type="submit" class="btn btn-danger" value="Kustuta Nimekirja"/>
-@* 			<a asp-action="UserTogglePrivacy" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"type="submit" class="btn btn-warning" asp-route-thisuserid="@Model.ListBelongToUser" >click</a> *@
-			<input asp-action="UserEditList" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"type="submit" class="btn btn-success" value="Muuda nimekirja sisu ja andmeid"/>
+			   formethod="get" class="btn btn-warning" value="Muuda nimekiri privaatseks" />
 			<a asp-action="Index" asp-controller="FavouriteLists" class="btn btn-light">Tagasi</a>
-		</form>
 	</div>
+	</form>
 </div>

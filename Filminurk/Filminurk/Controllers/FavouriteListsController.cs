@@ -146,37 +146,83 @@ namespace Filminurk.Controllers
 
             return View("Details", thisList);
         }
-        //[HttpPost]
-        //public async Task<IActionResult> UserTogglePrivacy(Guid id)
+        //[HttpGet]
+        //public async Task<IActionResult> UserTogglePrivacy(Guid id, Guid thisuserid)
         //{
-        //    FavouriteListDTO thisList = _favouriteListsServices.DetailsAsync(id);
+        //    if (id == Guid.Empty || thisuserid == Guid.Empty)
+        //        return BadRequest();
 
-        //    FavouriteListDTO updatedList = new FavouriteListDTO();
-        //    updatedList.FavouriteListID = thisList.FavouriteListID;
-        //    updatedList.ListBelongToUser = thisList.ListBelongToUser;
-        //    updatedList.IsMovieOrActor = thisList.IsMovieOrActor;
-        //    updatedList.ListName = thisList.ListName;
-        //    updatedList.ListDescription = thisList.ListDescription;
-        //    updatedList.IsPrivate = thisList.IsPrivate;
-        //    updatedList.ListOfMovies = thisList.ListOfMovies;
-        //    updatedList.IsReported = thisList.IsReported;
-        //    updatedList.ListCreatedAt = thisList.ListCreatedAt;
-        //    updatedList.ListModifiedAt = DateTime.Now;
-        //    updatedList.ListDeletedAt = updatedList.ListDeletedAt;
+        //    var thisList = await _context.FavouriteLists
+        //        .Where(tl => tl.FavouriteListID == id &&
+        //                     tl.ListBelongToUser == thisuserid.ToString())
+        //        .Select(stl => new FavouriteListUserDetailsViewModel
+        //        {
+        //            FavouriteListID = stl.FavouriteListID,
+        //            ListBelongToUser = stl.ListBelongToUser,
+        //            IsMovieOrActor = stl.IsMovieOrActor,
+        //            ListName = stl.ListName,
+        //            ListDescription = stl.ListDescription,
+        //            IsPrivate = stl.IsPrivate,
+        //            ListOfMovies = stl.ListOfMovies,
+        //            IsReported = stl.IsReported,
+        //            ListCreatedAt = stl.ListCreatedAt,
+        //            ListModifiedAt = stl.ListModifiedAt,
+        //            ListDeletedAt = stl.ListDeletedAt,
 
-        //    thisList.IsPrivate = !thisList.IsPrivate;
-        //    _favouriteListsServices.Update(thisList);
-        //    return View("Details");
+        //            //Image = _context.FilesToDatabase
+        //            //    .Where(i => i.ListID == stl.FavouriteListID)
+        //            //    .Select(si => new FavouriteListIndexImageViewModel
+        //            //    {
+        //            //        ImageID = si.ImageID,
+        //            //        ListID = si.ListID,
+        //            //        ImageData = si.ImageData,
+        //            //        ImageTitle = si.ImageTitle,
+        //            //        Image = "data:image/gif;base64," + Convert.ToBase64String(si.ImageData)/*      Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(si.ImageData))*/
+        //            //    }).FirstOrDefault()
+        //        }).FirstOrDefaultAsync();
+
+        //    if (thisList == null)
+        //        return NotFound();
+
+        //    return View("UserTogglePrivacy", thisList);
         //}
+        [HttpPost]
+        public async Task<IActionResult> UserTogglePrivacy(Guid id)
+        {
+            FavouriteList thisList = await _favouriteListsServices.DetailsAsync(id);
 
-        //public List<Guid> MovieToID(List<Movie> listOfMovies)
-        //{
-        //    var result = new List<Guid>();
-        //    foreach (var movie in listOfMovies)
-        //    {
-        //        result.Add((Guid)movie.ID);
-        //    }
-        //    return result;
-        //}
+            FavouriteListDTO updatedList = new FavouriteListDTO();
+            updatedList.FavouriteListID = thisList.FavouriteListID;
+            updatedList.ListBelongToUser = thisList.ListBelongToUser;
+            updatedList.IsMovieOrActor = thisList.IsMovieOrActor;
+            updatedList.ListName = thisList.ListName;
+            updatedList.ListDescription = thisList.ListDescription;
+            updatedList.IsPrivate = !updatedList.IsPrivate;
+            updatedList.ListOfMovies = thisList.ListOfMovies;
+            updatedList.IsReported = thisList.IsReported;
+            updatedList.ListCreatedAt = thisList.ListCreatedAt;
+            updatedList.ListModifiedAt = DateTime.Now;
+            updatedList.ListDeletedAt = updatedList.ListDeletedAt;
+
+            //var result = await _favouriteListsServices.Update(updatedList);
+            //if (result == null || result.IsPrivate != !result.IsPrivate)
+            //{
+            //    return BadRequest();
+            //}
+            await _context.SaveChangesAsync();
+            return RedirectToAction("UserDetails",result.FavouriteListID);
+            
+        }
+
+
+        public List<Guid> MovieToID(List<Movie> listOfMovies)
+        {
+            var result = new List<Guid>();
+            foreach (var movie in listOfMovies)
+            {
+                result.Add((Guid)movie.ID);
+            }
+            return result;
+        }
     }
 }

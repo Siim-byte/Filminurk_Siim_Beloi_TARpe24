@@ -24,6 +24,7 @@ namespace Filminurk.ApplicationServices.Services
         public async Task<FavouriteList> DetailsAsync(Guid id)
         {
             var result = await _context.FavouriteLists
+                .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.FavouriteListID == id);
             return result;
         }
@@ -51,9 +52,25 @@ namespace Filminurk.ApplicationServices.Services
 
 
         }
-        //public async Task<FavouriteList> Update(FavouriteListDTO dto)
-        //{
+        public async Task<FavouriteList> Update(FavouriteListDTO updatedList)
+        {
+            FavouriteList updatedListInDB = new();
+
+            updatedListInDB.FavouriteListID = updatedList.FavouriteListID;
+            updatedListInDB.ListBelongToUser = updatedList.ListBelongToUser;
+            updatedListInDB.IsMovieOrActor = updatedList.IsMovieOrActor;
+            updatedListInDB.ListName = updatedList.ListName;
+            updatedListInDB.ListDescription = updatedList.ListDescription;
+            updatedListInDB.IsPrivate = updatedList.IsPrivate;
+            updatedListInDB.ListOfMovies = updatedList.ListOfMovies;
+            updatedListInDB.ListCreatedAt = updatedList.ListCreatedAt;
+            updatedListInDB.ListDeletedAt = updatedList.ListDeletedAt;
+            updatedListInDB.ListModifiedAt = updatedList.ListModifiedAt;
+            _context.FavouriteLists.Attach(updatedListInDB);
+            _context.Entry(updatedListInDB).Property(l => l.IsPrivate).IsModified = true;
+            await _context.SaveChangesAsync();
+            return updatedListInDB;
             
-        //}
+        }
     }
 }
