@@ -3,9 +3,12 @@ using Filminurk.Core.Dto;
 using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,8 +55,9 @@ namespace Filminurk.ApplicationServices.Services
 
 
         }
-        public async Task<FavouriteList> Update(FavouriteListDTO updatedList)
+        public async Task<FavouriteList> Update(FavouriteListDTO updatedList, string typeofmethod)
         {
+
             FavouriteList updatedListInDB = new();
 
             updatedListInDB.FavouriteListID = updatedList.FavouriteListID;
@@ -66,11 +70,20 @@ namespace Filminurk.ApplicationServices.Services
             updatedListInDB.ListCreatedAt = updatedList.ListCreatedAt;
             updatedListInDB.ListDeletedAt = updatedList.ListDeletedAt;
             updatedListInDB.ListModifiedAt = updatedList.ListModifiedAt;
-            _context.FavouriteLists.Attach(updatedListInDB);
-            _context.Entry(updatedListInDB).Property(l => l.IsPrivate).IsModified = true;
+            _context.Entry(updatedListInDB).Property(l => l.ListModifiedAt).IsModified = true;
+
+            if (typeofmethod == "Delete")
+            {
+                _context.Entry(updatedListInDB).Property(l => l.ListDeletedAt).IsModified = true;
+            }
+
+            if (typeofmethod == "Private")
+            {
+                _context.Entry(updatedListInDB).Property(l => l.IsPrivate).IsModified = true;
+            }
+            _context.Entry(updatedListInDB).Property(l => l.ListModifiedAt).IsModified = true;
             await _context.SaveChangesAsync();
             return updatedListInDB;
-            
-        }
+        }   
     }
 }

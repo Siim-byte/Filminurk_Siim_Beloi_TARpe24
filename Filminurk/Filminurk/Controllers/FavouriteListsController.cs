@@ -34,6 +34,7 @@ namespace Filminurk.Controllers
                     ListName = x.ListName,
                     ListDescription = x.ListDescription,
                     ListCreatedAt = x.ListCreatedAt,
+                    ListDeletedAt = (DateTime)x.ListDeletedAt,
                     Image = (List<FavouriteListIndexImageViewModel>)_context.FilesToDatabase
                     .Where(ml => ml.ListID == x.FavouriteListID)
                     .Select(li => new FavouriteListIndexImageViewModel
@@ -203,8 +204,13 @@ namespace Filminurk.Controllers
             updatedList.ListCreatedAt = thisList.ListCreatedAt;
             updatedList.ListModifiedAt = DateTime.Now;
             updatedList.ListDeletedAt = updatedList.ListDeletedAt;
+            ViewData["UpdateServiceType"] = "Private";
 
-            //var result = await _favouriteListsServices.Update(updatedList);
+            var result = await _favouriteListsServices.Update(updatedList, "Private");
+            if (result == null)
+            {
+                return NotFound();
+            }
             //if (result == null || result.IsPrivate != !result.IsPrivate)
             //{
             //    return BadRequest();
@@ -213,7 +219,34 @@ namespace Filminurk.Controllers
             return RedirectToAction("UserDetails",result.FavouriteListID);
             
         }
+        [HttpPost]
+        public async Task<IActionResult> UserDelete(Guid id)
+        {
+            var deletedlist = await _favouriteListsServices.DetailsAsync(id);
+            deletedlist.ListDeletedAt = DateTime.Now;
 
+            var dto = new FavouriteListDTO();
+            dto.FavouriteListID = deletedlist.FavouriteListID;
+            dto.ListBelongToUser = deletedlist.ListBelongToUser;
+            dto.IsMovieOrActor = deletedlist.IsMovieOrActor;
+            dto.ListName = deletedlist.ListName;
+            dto.ListDescription = deletedlist.ListDescription;
+            dto.IsPrivate = !deletedlist.IsPrivate;
+            dto.ListOfMovies = deletedlist.ListOfMovies;
+            dto.IsReported = deletedlist.IsReported;
+            dto.ListCreatedAt = deletedlist.ListCreatedAt;
+            dto.ListModifiedAt = DateTime.Now;
+            dto.ListDeletedAt = DateTime.Now;
+
+
+            var result = await _favouriteListsServices.Update(dto, "Delete");
+            if (result == null)
+            {
+                NotFound();
+            }
+            return RedirectToAction("Index");
+
+        }
 
         public List<Guid> MovieToID(List<Movie> listOfMovies)
         {

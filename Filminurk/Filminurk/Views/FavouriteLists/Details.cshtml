@@ -20,7 +20,8 @@
 </div>
 
 <div>
-	<table class="table">
+	<form>
+		<table class="table">
 		@foreach (var movie in Model.ListOfMovies)
 		{
 			<tr>
@@ -46,14 +47,20 @@
 		}
 	</table>
 	<div>
-		<form>
+			<form asp-action="UserTogglePrivacy" asp-controller="FavouriteLists" method="post" class="d-inline">
+				<input type="hidden" name="id" value="@Model.FavouriteListID" />
+				<button type="submit" class="btn btn-warning">Muuda nimekiri privaatseks</button>
+			</form>
 
-			<input asp-action="UserTogglePrivacy" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"
-				   formethod="get" class="btn btn-warning" value="Muuda nimekiri privaatseks" />
-			<input asp-action="UserDelete" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID" type="submit" class="btn btn-danger" value="Kustuta Nimekirja"/>
-@* 			<a asp-action="UserTogglePrivacy" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"type="submit" class="btn btn-warning" asp-route-thisuserid="@Model.ListBelongToUser" >click</a> *@
-			<input asp-action="UserEditList" asp-controller="FavouriteLists" asp-route-id="@Model.FavouriteListID"type="submit" class="btn btn-success" value="Muuda nimekirja sisu ja andmeid"/>
+			<form asp-action="UserDelete" asp-controller="FavouriteLists" method="post" class="d-inline">
+				<input type="hidden" name="id" value="@Model.FavouriteListID" />
+				<button type="submit" class="btn btn-danger">Kustuta nimekirja</button>
+			</form>
+
+			<a asp-action="UserEditList" asp-controller="FavouriteLists"
+			   asp-route-id="@Model.FavouriteListID" class="btn btn-success">Muuda nimekirja sisu ja andmeid</a>
+
 			<a asp-action="Index" asp-controller="FavouriteLists" class="btn btn-light">Tagasi</a>
-		</form>
 	</div>
+		</form>
 </div>
