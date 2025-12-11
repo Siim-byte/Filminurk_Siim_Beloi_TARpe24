@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Environment = Filminurk.Data.Environment;
 
 namespace Filminurk.ApplicationServices.Services
 {
@@ -21,9 +22,9 @@ namespace Filminurk.ApplicationServices.Services
         public void SendEmail(EmailDTO dto)
         {
             var email = new MimeMessage();
-            _configuration.GetSection("EmailUserName").Value = "kevinkask56";
-            _configuration.GetSection("EmailHost").Value = "smtp.gmail.com";
-            _configuration.GetSection("EmailPassword").Value = "wbgt tfls fxcm vtcn"; // airon please no steal 
+            _configuration.GetSection("EmailUserName").Value = Environment.gmailusername;
+            _configuration.GetSection("EmailHost").Value = Environment.smtaddress;
+            _configuration.GetSection("EmailPassword").Value = Environment.gmailapppassword; // airon please no steal 
 
             email.From.Add(MailboxAddress.Parse(_configuration.GetSection("EmailUserName").Value));
             email.To.Add(MailboxAddress.Parse(dto.SendToThisAddress));

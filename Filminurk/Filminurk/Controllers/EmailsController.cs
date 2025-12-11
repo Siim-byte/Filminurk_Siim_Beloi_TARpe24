@@ -1,4 +1,5 @@
-﻿using Filminurk.Core.Dto;
+﻿using Filminurk.ApplicationServices.Services;
+using Filminurk.Core.Dto;
 using Filminurk.Core.ServiceInterface;
 using Filminurk.Models.Emails;
 using Microsoft.AspNetCore.Mvc;
