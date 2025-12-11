@@ -8,8 +8,8 @@ namespace Filminurk.Controllers
 {
     public class EmailsController : Controller
     {
-        private readonly IEmailServices _emailServices;
-        public EmailsController(IEmailServices emailServices)
+        private readonly IEmailsServices _emailServices;
+        public EmailsController(IEmailsServices emailServices)
         {
             _emailServices = emailServices;
         }

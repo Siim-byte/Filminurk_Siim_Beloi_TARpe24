@@ -14,9 +14,9 @@ namespace Filminurk.ApplicationServices.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IEmailServices _emailServices;
+        private readonly IEmailsServices _emailServices;
 
-        public AccountsServices(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailServices emailServices)
+        public AccountsServices(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailsServices emailServices)
         {
             _userManager=userManager;
             _signInManager=signInManager;

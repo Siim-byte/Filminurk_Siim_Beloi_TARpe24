@@ -12,7 +12,7 @@ using Environment = Filminurk.Data.Environment;
 
 namespace Filminurk.ApplicationServices.Services
 {
-    public class EmailServices : IEmailServices
+    public class EmailServices : IEmailsServices
     {
         private readonly IConfiguration _configuration;
         public EmailServices(IConfiguration configuration)

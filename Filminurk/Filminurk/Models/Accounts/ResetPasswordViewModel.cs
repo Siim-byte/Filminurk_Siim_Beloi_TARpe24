@@ -10,7 +10,7 @@ namespace Filminurk.Models.Accounts
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [DataType(DataType.Password)]]
+        [DataType(DataType.Password)]
         [Display(Name = "Kirjuta oma uus parool uuesti:")]
         [Compare("Password", ErrorMessage = "Paroolid ei kattu, palun proovi uuesti.")]
         public string ConfirmNewPassword { get; set; }

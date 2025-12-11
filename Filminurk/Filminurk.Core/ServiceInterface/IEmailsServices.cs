@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace Filminurk.Core.ServiceInterface
 {
-    public class IEmailServices
+    public interface IEmailsServices
     {
         void SendEmail(EmailDTO dto);
-        
-            //HOMEWORK LOCATION
-        
     }
 }
