@@ -5,6 +5,7 @@ using Filminurk.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -28,7 +29,6 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     .AddEntityFrameworkStores<FilminurkTARpe24Context>()
     .AddDefaultTokenProviders()
     .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation");
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

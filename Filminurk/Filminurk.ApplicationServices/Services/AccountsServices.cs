@@ -40,10 +40,10 @@ namespace Filminurk.ApplicationServices.Services
             return user;
         }
         //homework location
-        public async Task<ApplicationUser> Login(LoginDTO userDTO)
-        {
-            var user = await _userManager.FindByEmailAsync(userDTO.Email);
+        //public async Task<ApplicationUser> Login(LoginDTO userDTO)
+        //{
+        //    var user = await _userManager.FindByEmailAsync(userDTO.Email);
 
-        }
+        //}
     }
 }

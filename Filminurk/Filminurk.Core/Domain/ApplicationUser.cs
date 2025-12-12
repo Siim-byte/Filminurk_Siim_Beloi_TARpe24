@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,6 @@ namespace Filminurk.Core.Domain
         public string AvatarImageID { get; set; }
         public string DisplayName { get; set; }
         public bool ProfileType { get; set; }
-        public int Reputation { get; set; } = 0;
-        public string? Signature { get; set; }
+
     }
 }
