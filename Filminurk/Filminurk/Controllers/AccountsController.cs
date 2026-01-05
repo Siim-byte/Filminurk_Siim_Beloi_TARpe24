@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Filminurk.Core.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Filminurk.Models.Accounts;
+using Filminurk.Core.Dto;
 
 namespace Filminurk.Controllers
 {
@@ -19,12 +20,14 @@ namespace Filminurk.Controllers
             (
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            FilminurkTARpe24Context context
+            FilminurkTARpe24Context context,
+            IEmailsServices emailsServices
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _emailsServices = emailsServices;
         }
         [HttpGet]
         public async Task<IActionResult> AddPassword()
@@ -197,6 +200,14 @@ namespace Filminurk.Controllers
                     // HOMEWORK TASK: koosta email kasutajalt pärineva aadressile saatmiseks, kasutaja saab oma postkastist kätte emaili
                     // kinnituslingiga, mille jaoks kasutatakse tokenit, siin tuleb välja kutsuda vastav, uus emaili saatmise meetod, mis saadab
                     // õige sisuga kirja
+                    var dto = new EmailDTO()
+                    {
+                        SendToThisAddress = model.Email,
+                        EmailSubject = "Email confirmation",
+                        EmailContent = confirmationLink,
+                    };
+                    _emailsServices.SendEmail(dto);
+                    return RedirectToAction("Index", "Home");
                 }
 
                 return RedirectToAction("Index", "Home");
