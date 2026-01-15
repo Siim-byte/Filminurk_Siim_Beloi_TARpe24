@@ -8,5 +8,6 @@ namespace Filminurk.Core.Dto.OMDbDTOs
 {
     public class OMDbApiDTO
     {
+        public string Title { get; set; } = string.Empty;
     }
 }

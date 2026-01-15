@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Filminurk.Core.Dto.OMDbDTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace Filminurk.Core.ServiceInterface
 {
     public interface IOMDbServices
     {
+        Task<OMDbApiDTO> OMDbApi(OMDbApiDTO dto);
     }
 }
