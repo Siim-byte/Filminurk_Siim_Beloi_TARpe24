@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Filminurk.Core.Dto.OMDbDTOs
 {
-    public class OMDbApiDTO
+    public class OMDbRatingDTO
     {
-        public string Title { get; set; } = string.Empty;
+        public string Source { get; set; }
+        public string Value { get; set; }
     }
 }

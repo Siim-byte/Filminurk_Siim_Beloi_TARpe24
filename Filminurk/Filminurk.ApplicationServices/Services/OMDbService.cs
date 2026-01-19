@@ -12,7 +12,7 @@ namespace Filminurk.ApplicationServices.Services
     {
 
 
-        public async Task<OMDbApiDTO> OMDbApi(OMDbApiDTO dto)
+        public async Task<OMDbApiResultDTO> OMDbApi(OMDbApiResultDTO dto)
         {
             string apikey = Filminurk.Data.Environment.omdbkey;
 

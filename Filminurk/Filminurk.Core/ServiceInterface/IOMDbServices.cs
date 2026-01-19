@@ -9,6 +9,6 @@ namespace Filminurk.Core.ServiceInterface
 {
     public interface IOMDbServices
     {
-        Task<OMDbApiDTO> OMDbApi(OMDbApiDTO dto);
+        Task<OMDbApiResultDTO> OMDbApi(OMDbApiResultDTO dto);
     }
 }
