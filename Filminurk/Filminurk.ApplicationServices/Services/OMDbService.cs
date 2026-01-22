@@ -17,33 +17,28 @@ namespace Filminurk.ApplicationServices.Services
         {
             string apikey = Filminurk.Data.Environment.omdbkey;
 
-            var baseUrl = "http://www.omdbapi.com/?apikey=[7dbe858b]&";
-            var omdbUrl = $"http://img.omdbapi.com/?apikey=[7dbe858b]&";
+            string omdbResponse = $"http://www.omdbapi.com/?t={dto.Title}&y={dto.Year}&apikey={apikey}";
 
-           /* using (var httpClient = new HttpClient())
-            {
-                httpClient.BaseAddress = new Uri(omdbUrl);
-                httpClient.DefaultRequestHeaders.Accept.Clear();
-                httpClient.DefaultRequestHeaders.Accept.Add(
-                    new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")
-                );
-                var response = httpClient.GetAsync($"?q={dto.Title}&apikey={apikey}&details=true").GetAwaiter().GetResult();
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                try
-                {
-                    List<OMDbApiRootDTO> omdbData = JsonSerializer.Deserialize<List<OMDbApiRootDTO>>(jsonResponse);
-                    //dto.Title = omdbData[0].
-                    //dto.Year = omdbData[0].
-                }
-            }
-            string omdbResponse = baseUrl + $"{dto.Year}?apikey={apikey}&metric=true";
             using (var clientOMDb = new HttpClient())
             {
-                var httpResponseOMDb = clientOMDb.GetAsync(omdbResponse).GetAwaiter().GetResult();
+                var httpResponseOMDb = await clientOMDb.GetAsync(omdbResponse);
                 string jsonOMDb = await httpResponseOMDb.Content.ReadAsStringAsync();
 
+                try
+                {
+                    // Deserialize JSON into your DTO
+                    var omdbData = JsonSerializer.Deserialize<OMDbApiResultDTO>(jsonOMDb);
 
-            }*/
+                    // Return the data (or merge with input dto if needed)
+                    return omdbData;
+                }
+                catch
+                {
+                    // Handle errors (return the original dto if deserialization fails)
+                    return dto;
+                }
+            }
         }
+
     }
 }
