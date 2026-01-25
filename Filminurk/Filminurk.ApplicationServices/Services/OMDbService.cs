@@ -16,9 +16,10 @@ namespace Filminurk.ApplicationServices.Services
         public async Task<OMDbApiResultDTO> OMDbApi(OMDbApiResultDTO dto)
         {
             string apikey = Filminurk.Data.Environment.omdbkey;
+            string baseUrl = "http://www.omdbapi.com/";
+            string omdbResponse = $"{baseUrl}?t={Uri.EscapeDataString(dto.Title)}&apikey={apikey}";
 
-            string omdbResponse = $"http://www.omdbapi.com/?t={dto.Title}&y={dto.Year}&apikey={apikey}";
-
+            OMDbApiRootDTO rootDto = new OMDbApiRootDTO();
             using (var clientOMDb = new HttpClient())
             {
                 var httpResponseOMDb = await clientOMDb.GetAsync(omdbResponse);
@@ -26,19 +27,33 @@ namespace Filminurk.ApplicationServices.Services
 
                 try
                 {
-                    // Deserialize JSON into your DTO
-                    var omdbData = JsonSerializer.Deserialize<OMDbApiResultDTO>(jsonOMDb);
+                    rootDto = JsonSerializer.Deserialize<OMDbApiRootDTO>(jsonOMDb,new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    if (rootDto.Response == "True")
+                    {
+                        dto.Title = rootDto.Title;
+                        dto.Released = rootDto.Released;
+                        dto.Director = rootDto.Director;
+                        dto.Actors = rootDto.Actors;
+                        dto.Plot = rootDto.Plot;
+                        dto.imdbRating = rootDto.imdbRating;
+                        dto.Response = rootDto.Response;
+                    }
+                    else
+                    {
+                        dto.Response = "False";
+                        dto.Error = rootDto.Error;
+                    }
 
-                    // Return the data (or merge with input dto if needed)
-                    return omdbData;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // Handle errors (return the original dto if deserialization fails)
-                    return dto;
+                    dto.Response = "False";
+                    dto.Error = ex.Message;
                 }
             }
-        }
+            return dto;
 
+
+        }
     }
 }
