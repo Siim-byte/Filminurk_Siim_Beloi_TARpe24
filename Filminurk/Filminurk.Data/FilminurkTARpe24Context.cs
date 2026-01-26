@@ -18,6 +18,7 @@ namespace Filminurk.Data
         public DbSet<Actors> Actors { get; set; }
         public DbSet<FavouriteList> FavouriteLists { get; set; }
         public DbSet<FileToDatabase> FilesToDatabase { get; set; }
+        public DbSet<OMDbToDatabase> OmdbToDatabase{ get; set;}
         //public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }
