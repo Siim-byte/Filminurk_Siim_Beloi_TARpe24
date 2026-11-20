@@ -23,4 +23,4 @@ Veebirakendus, kus kasutajad saavad sirvida filmide valikut, neid osta ning lisa
 4. Käivita projekt (`F5`).
 
 ## 👤 Autor
-**Siim Beloi** – [GitHub](https://github.com)
+**Siim Belõi** – [GitHub](https://github.com/siim-byte)
